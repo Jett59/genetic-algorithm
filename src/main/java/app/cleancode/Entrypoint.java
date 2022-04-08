@@ -17,19 +17,5 @@ public class Entrypoint {
         List<Double> inputs = IntStream.range(0, 5).mapToObj(Double::valueOf).toList();
         List<Double> outputs = network.apply(inputs, ActivationFunction.DEFAULT);
         System.out.println(outputs);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-        objectOutputStream.writeObject(network);
-        byte[] bytes = outputStream.toByteArray();
-        outputStream.close();
-        objectOutputStream.close();
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
-        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-        Network readNetwork = (Network) objectInputStream.readObject();
-        inputStream.close();
-        objectInputStream.close();
-        List<Double> readNetworkOutputs = readNetwork.apply(inputs, ActivationFunction.DEFAULT);
-        System.out.println(readNetworkOutputs);
-        System.out.println(outputs.equals(readNetworkOutputs));
     }
 }

@@ -3,6 +3,7 @@ package app.cleancode.network;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Neuron implements Serializable {
     private static final long serialVersionUID = -1973959092332235548L;
@@ -40,5 +41,13 @@ public class Neuron implements Serializable {
 
     public void clear() {
         value = 0;
+    }
+    
+    public Neuron mutate(double rate, Random rand) {
+        List<Double> newWeights = new ArrayList<>(weights);
+        int weight = rand.nextInt(weights.size());
+        double change = (Math.random() - 0.5) * rate;
+        newWeights.set(weight, weights.get(weight) + change);
+        return new Neuron(newWeights);
     }
 }

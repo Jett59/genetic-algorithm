@@ -3,6 +3,7 @@ package app.cleancode.network;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Layer implements Serializable {
     private static final long serialVersionUID = -2767616583671736945L;
@@ -31,10 +32,18 @@ public class Layer implements Serializable {
             }
         }
     }
-    
+
     public void clear() {
         for (Neuron neuron : neurons) {
             neuron.clear();
         }
+    }
+
+    public Layer mutate(double rate, Random rand) {
+        List<Neuron> newNeurons = new ArrayList<>();
+        int neuronIndex = rand.nextInt(neurons.size());
+        Neuron neuron = neurons.get(neuronIndex);
+        newNeurons.set(neuronIndex, neuron.mutate(rate));
+        return new Layer(newNeurons);
     }
 }

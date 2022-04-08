@@ -1,4 +1,4 @@
-package app.cleancode;
+package app.cleancode.network;
 
 import java.io.Serializable;
 import java.util.ArrayList;

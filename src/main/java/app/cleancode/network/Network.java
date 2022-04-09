@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.SplittableRandom;
 
 public class Network implements Serializable {
     private static final long serialVersionUID = 3033103393920025182L;
@@ -48,11 +49,13 @@ public class Network implements Serializable {
         }
     }
 
-    public Network mutate(double rate, Random rand) {
+    public Network mutate(double rate, SplittableRandom rand) {
         List<Layer> newLayers = new ArrayList<>(layers);
-        int layerIndex = rand.nextInt(layers.size());
-        Layer layer = layers.get(layerIndex);
-        newLayers.set(layerIndex, layer.mutate(rate, rand));
+        while (rand.nextBoolean()) {
+            int layerIndex = rand.nextInt(layers.size());
+            Layer layer = layers.get(layerIndex);
+            newLayers.set(layerIndex, layer.mutate(rate, rand));
+        }
         return new Network(newLayers);
     }
 }

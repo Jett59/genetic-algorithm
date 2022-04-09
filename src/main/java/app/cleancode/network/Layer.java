@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.SplittableRandom;
 
 public class Layer implements Serializable {
     private static final long serialVersionUID = -2767616583671736945L;
@@ -39,11 +40,13 @@ public class Layer implements Serializable {
         }
     }
 
-    public Layer mutate(double rate, Random rand) {
-        List<Neuron> newNeurons = new ArrayList<>();
+    public Layer mutate(double rate, SplittableRandom rand) {
+        List<Neuron> newNeurons = new ArrayList<>(neurons);
+        while (rand.nextBoolean()) {
         int neuronIndex = rand.nextInt(neurons.size());
         Neuron neuron = neurons.get(neuronIndex);
-        newNeurons.set(neuronIndex, neuron.mutate(rate));
+        newNeurons.set(neuronIndex, neuron.mutate(rate, rand));
+        }
         return new Layer(newNeurons);
     }
 }

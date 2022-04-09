@@ -1,5 +1,8 @@
 package app.cleancode;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -34,6 +37,10 @@ public class Entrypoint {
                     bestNetwork.apply(input.getNetworkInputs(), ActivationFunction.DEFAULT).get(0);
             System.out.printf("%s: %f (score: %f)\n", input.text(), networkOutput,
                     scorer.getScore(input, List.of(networkOutput)));
+        }
+        try (FileOutputStream outputStream = new FileOutputStream(new File("best.bin"));
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)) {
+            objectOutputStream.writeObject(bestNetwork);
         }
         System.out.println("Try it!");
         try (Scanner scanner = new Scanner(System.in)) {

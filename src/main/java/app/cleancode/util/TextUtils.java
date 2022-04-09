@@ -9,7 +9,7 @@ public class TextUtils {
             throw new IllegalArgumentException("Too many inputs");
         }
         List<Double> inputs = IntStream.range(0, inputCount)
-                .map(i -> i < txt.length() ? txt.charAt(inputCount) : ' ')
+                .map(i -> i < txt.length() ? txt.charAt(i) : ' ')
                 .map(Character::toLowerCase).map(c -> {
                     if (Character.isDigit(c)) {
                         return c - '0';
@@ -21,7 +21,7 @@ public class TextUtils {
                         throw new IllegalArgumentException(
                                 String.format("Illegal character %c", c));
                     }
-                }).mapToDouble(i -> (1 / 40) * i).boxed().toList();
+                }).mapToDouble(i -> (1d / 40) * i).boxed().toList();
         return inputs;
     }
 }

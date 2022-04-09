@@ -7,11 +7,12 @@ public class Scorer implements TrainingScorer<Input> {
 
     @Override
     public double getScore(Input input, List<Double> output) {
-        double score = 0;
-        for (int i = 0; i < input.numbers().size(); i++) {
-            score += Math.pow(input.numbers().get(i) - output.get(i), 2);
+        double networkOutput = output.get(0);
+        if (input.correct()) {
+            return -networkOutput + 1;
+        }else {
+            return networkOutput;
         }
-        return score;
     }
 
 }

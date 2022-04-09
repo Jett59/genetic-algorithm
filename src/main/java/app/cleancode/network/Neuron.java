@@ -2,17 +2,18 @@ package app.cleancode.network;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.SplittableRandom;
 
 public class Neuron implements Serializable {
     private static final long serialVersionUID = -1973959092332235548L;
 
-    private final ArrayList<Double> weights;
+    private final List<Double> weights;
     private transient double value;
 
     public Neuron(List<Double> weights) {
-        this.weights = new ArrayList<>(weights);
+        this.weights = Collections.unmodifiableList(new ArrayList<>(weights));
     }
 
     public void addValue(double addition) {

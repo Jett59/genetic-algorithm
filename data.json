@@ -1,0 +1,10 @@
+[
+    {
+        "word": "hello",
+        "correct": true
+    },
+    {
+        "word": "bleah",
+        "correct": false
+    }
+]

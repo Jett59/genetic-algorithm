@@ -64,4 +64,8 @@ public class Trainer<Input extends TrainingInput> {
     public double getBestScore() {
         return networks.first().score();
     }
+    
+    public void addNetwork(Network network) {
+        networks.add(scoreNetwork(network));
+    }
 }

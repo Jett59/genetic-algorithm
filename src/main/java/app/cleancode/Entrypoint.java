@@ -1,7 +1,9 @@
 package app.cleancode;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -23,6 +25,12 @@ public class Entrypoint {
         Scorer scorer = new Scorer();
         Trainer<Input> trainer = new Trainer<>(new NetworkDescription(new int[] {10, 10, 1}),
                 inputs, scorer, ActivationFunction.DEFAULT);
+        if (Files.exists(Paths.get("best.bin"))) {
+            try (FileInputStream inputStream = new FileInputStream(new File("best.bin"));
+                    ObjectInputStream objectInputStream = new ObjectInputStream(inputStream)) {
+                trainer.addNetwork((Network)objectInputStream.readObject());
+            }
+        }
         trainer.start();
         SplittableRandom rand = new SplittableRandom();
         for (int i = 0; i < 1000; i++) {

@@ -1,10 +1,1 @@
-[
-    {
-        "word": "hello",
-        "correct": true
-    },
-    {
-        "word": "bleah",
-        "correct": false
-    }
-]
+[{"text":"hello","correct":true},{"text":"bleah","correct":false},{"text":"test","correct":true},{"text":"ijnlk","correct":false},{"text":"pie","correct":true},{"text":"text","correct":true},{"text":"cofr","correct":false},{"text":"apple","correct":true},{"text":"applee","correct":false},{"text":"olj","correct":false},{"text":"include","correct":true},{"text":"imklud","correct":false},{"text":"balloon","correct":true},{"text":"tii","correct":false}]

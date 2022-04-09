@@ -3,6 +3,7 @@ package app.cleancode;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Scanner;
 import java.util.SplittableRandom;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import app.cleancode.network.ActivationFunction;
@@ -23,7 +24,7 @@ public class Entrypoint {
         SplittableRandom rand = new SplittableRandom();
         for (int i = 0; i < 1000; i++) {
             System.out.println(trainer.getBestScore());
-                trainer.train(trainer.getBestScore() * 2, rand);
+            trainer.train(trainer.getBestScore() * 2, rand);
         }
         System.out.println("Results:");
         System.out.println(trainer.getBestScore());
@@ -33,6 +34,25 @@ public class Entrypoint {
                     bestNetwork.apply(input.getNetworkInputs(), ActivationFunction.DEFAULT).get(0);
             System.out.printf("%s: %f (score: %f)\n", input.text(), networkOutput,
                     scorer.getScore(input, List.of(networkOutput)));
+        }
+        System.out.println("Try it!");
+        try (Scanner scanner = new Scanner(System.in)) {
+            while (true) {
+                System.out.print("Text: ");
+                String text = scanner.nextLine();
+                if (text.length() > 10) {
+                    System.out.println("Too long!");
+                } else {
+                    double correctnessProbability = bestNetwork
+                            .apply(TextUtils.toNetworkInputs(text, 10), ActivationFunction.DEFAULT)
+                            .get(0);
+                    if (correctnessProbability > 0.5) {
+                        System.out.printf("Probably (%f)\n", correctnessProbability);
+                    } else {
+                        System.out.printf("Probably not (%f)\n", correctnessProbability);
+                    }
+                }
+            }
         }
     }
 }

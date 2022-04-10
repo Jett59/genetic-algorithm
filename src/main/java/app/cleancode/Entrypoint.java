@@ -23,7 +23,7 @@ public class Entrypoint {
         List<Input> inputs = List.of(
                 objectMapper.readValue(Files.readAllBytes(Paths.get("data.json")), Input[].class));
         Scorer scorer = new Scorer();
-        Trainer<Input> trainer = new Trainer<>(new NetworkDescription(new int[] {10, 10, 1}),
+        Trainer<Input> trainer = new Trainer<>(new NetworkDescription(new int[] {10, 20, 25, 30, 1}),
                 inputs, scorer, ActivationFunction.DEFAULT);
         if (Files.exists(Paths.get("best.bin"))) {
             try (FileInputStream inputStream = new FileInputStream(new File("best.bin"));
@@ -33,11 +33,16 @@ public class Entrypoint {
         }
         trainer.start();
         SplittableRandom rand = new SplittableRandom();
-        for (int i = 0; i < 1000; i++) {
-            System.out.println(trainer.getBestScore());
-            trainer.train(trainer.getBestScore() * 2, rand);
+        long startTime = System.nanoTime();
+        for (int i = 0; i < 512; i++) {
+            if (i % 64 == 0) {
+                System.out.println(trainer.getBestScore());
+            }
+            trainer.train(20000, rand);
         }
+        long totalTime = System.nanoTime() - startTime;
         System.out.println("Results:");
+        System.out.printf("Trained for %.3fs\n", (double)totalTime / 1000000000d);
         System.out.println(trainer.getBestScore());
         Network bestNetwork = trainer.getBestNetwork();
         for (Input input : inputs) {

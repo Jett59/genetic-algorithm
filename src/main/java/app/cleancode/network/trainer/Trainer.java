@@ -9,7 +9,7 @@ import app.cleancode.network.Network;
 import app.cleancode.network.NetworkDescription;
 
 public class Trainer<Input extends TrainingInput> {
-    private static final int NETWORK_COUNT = 65536;
+    private static final int NETWORK_COUNT = 1024;
 
     private final NetworkDescription networkDescription;
     private final List<Input> dataset;

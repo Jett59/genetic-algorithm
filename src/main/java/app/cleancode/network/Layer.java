@@ -28,7 +28,8 @@ public class Layer implements Serializable {
         for (int i = 0; i < neuronCount; i++) {
             Neuron neuron = neurons.get(i);
             neuron.activate(activationFunction);
-            for (int j = 0; j < neuron.getWeightCount(); j++) {
+            int weightCount = neuron.getWeightCount();
+            for (int j = 0; j < weightCount; j++) {
                 nextLayer.neurons.get(j).addValue(neuron.getWeightedValue(j));
             }
         }
